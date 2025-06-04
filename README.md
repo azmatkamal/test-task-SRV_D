@@ -9,6 +9,7 @@
 ## Run an app
 
 - First of all add DB credentials to `server/config/config.json`
+- Run `npm install` in both client and server folder
 - Before running the app we should run the migrations and seeds using the following commands
 - `npm run migrate` | `npm run seed`
 - Server: `npm run dev`
