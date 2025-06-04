@@ -18,9 +18,9 @@ exports.createOrder = async (req, res) => {
 
     const newOrder = await Order.create({
       customer,
-      dispensary,
-      status: status || "PLACED",
-      borough,
+      dispensary: dispensary,
+      status: status.toUpperCase() || "PLACED",
+      borough: borough.toUpperCase(),
     });
 
     const { optimized, alerts } = await getOptimizedBatchesAndAlerts();
