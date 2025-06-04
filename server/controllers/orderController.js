@@ -1,4 +1,37 @@
 const { Order } = require("../models");
+const { getOptimizedBatchesAndAlerts } = require("../utils/batchHelper");
+
+exports.createOrder = async (req, res) => {
+  try {
+    const { customer, dispensary, status, borough } = req.body;
+
+    if (
+      !customer ||
+      !dispensary ||
+      !borough ||
+      !["PLACED", "DISPATCHED"].includes(status.toUpperCase())
+    ) {
+      return res.status(400).json({
+        error: "Customer, dispensary, borough, and valid status are required",
+      });
+    }
+
+    const newOrder = await Order.create({
+      customer,
+      dispensary,
+      status: status || "PLACED",
+      borough,
+    });
+
+    const { optimized, alerts } = await getOptimizedBatchesAndAlerts();
+    const io = req.app.get("io");
+    io.emit("batch-updated", { optimized, alerts });
+
+    res.status(201).json(newOrder);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to create order" });
+  }
+};
 
 exports.getAllOrders = async (req, res) => {
   const where = req.query.borough ? { borough: req.query.borough } : {};
