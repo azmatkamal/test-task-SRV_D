@@ -1,0 +1,31 @@
+{
+	"info": {
+		"_postman_id": "870116ad-dbfa-473e-a326-1f4e1519a549",
+		"name": "Route",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5235253"
+	},
+	"item": [
+		{
+			"name": "OptimizedRoute",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5555/api/routes/optimized",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"api",
+						"routes",
+						"optimized"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
