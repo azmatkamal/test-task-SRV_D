@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const http = require("http");
 const { Server } = require("socket.io");
+const db = require("./models");
 const routes = require("./routes");
 const ordersRoutes = require("./routes/orders");
 const routeRoutes = require("./routes/routes");
@@ -25,7 +26,25 @@ app.use("/api", routes);
 
 app.set("io", io);
 
+// Socket.io connection
+io.on("connection", (socket) => {
+  console.log("🔌 Client connected:", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("❌ Client disconnected:", socket.id);
+  });
+
+  socket.on("order-created", () => {
+    io.emit("order-updated");
+  });
+
+  socket.on("order-updated", () => {
+    io.emit("order-updated");
+  });
+});
+
 const PORT = process.env.PORT || 5555;
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+server.listen(PORT, async () => {
+  await db.sequelize.sync();
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
