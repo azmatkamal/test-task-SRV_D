@@ -9,9 +9,9 @@
 ## Run an app
 
 - Before running the app we should run the migrations and seeds using the following commands
-- npm run migrate | npm run seed
-- Server: npm run dev
-- Client: npm run dev
+- `npm run migrate` | `npm run seed`
+- Server: `npm run dev`
+- Client: `npm run dev`
 
 ## Features
 
